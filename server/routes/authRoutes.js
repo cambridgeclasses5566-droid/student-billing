@@ -9,7 +9,7 @@ import { authLimiter } from "../middleware/rateLimiters.js";
 import { ok, fail } from "../utils/apiResponse.js";
 
 const router = Router(),
-  cookieOptions = { httpOnly: true, sameSite: "lax", secure: process.env.NODE_ENV === "production", maxAge: 7 * 86400000 };
+  cookieOptions = { httpOnly: true, sameSite: "lax", secure: process.env.NODE_ENV === "production", maxAge: 30 * 86400000 };
 const errors = (req) =>
   validationResult(req)
     .array()
