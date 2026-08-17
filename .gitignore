@@ -1,6 +1,7 @@
 node_modules/
 .npm-cache/
 .env
+.env.example
 npm-debug.log*
 coverage/
 server/uploads/logos/*
