@@ -1,0 +1,80 @@
+.product-logo-link {
+  display: inline-flex;
+  max-width: 190px;
+}
+
+.logo-surface {
+  display: flex;
+  width: 100%;
+  padding: 5px 8px;
+  background: #fff;
+  border-radius: 12px;
+}
+
+.product-logo {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 82px;
+  object-fit: contain;
+}
+
+/* Navigation Logo */
+.nav .product-logo-link {
+  width: 150px;
+}
+
+.nav .product-logo {
+  max-height: 58px;
+}
+
+/* Authentication Aside Logo */
+.auth-aside .product-logo-link {
+  width: min(280px, 100%);
+}
+
+.auth-aside .product-logo {
+  max-height: 160px;
+}
+
+/* Footer Logo */
+.footer .product-logo-link {
+  width: 210px;
+}
+
+/* Sidebar Logo */
+.side .product-logo-link {
+  width: 190px;
+  margin: auto;
+}
+
+.side .product-logo {
+  max-height: 200px;
+}
+
+/* WhatsApp Fallback */
+.whatsapp-link-fallback {
+  display: grid;
+  gap: 6px;
+  margin-top: 12px;
+  text-align: left;
+}
+
+.whatsapp-link-fallback input {
+  width: 100%;
+}
+
+/* Mobile Responsive */
+@media (max-width: 700px) {
+  .product-logo-link {
+    max-width: 150px;
+  }
+
+  .nav .product-logo-link {
+    width: 125px;
+  }
+
+  .side .product-logo-link {
+    width: 150px;
+  }
+}

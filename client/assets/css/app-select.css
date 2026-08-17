@@ -1,0 +1,28 @@
+.app-select{position:relative;width:100%;max-width:100%;min-width:0;box-sizing:border-box}
+.app-select-native{position:absolute!important;width:1px!important;height:1px!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important;clip-path:inset(50%)!important;white-space:nowrap!important;pointer-events:none!important}
+.app-select-trigger{width:100%;max-width:100%;min-width:0;min-height:46px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 12px;border:1px solid var(--border-strong,#d1d5db);border-radius:12px;background:var(--field-bg,var(--bg-surface,#fff));color:var(--text-main,#111827);font:inherit;text-align:left;box-sizing:border-box;cursor:pointer;transition:var(--control-transition,background-color 160ms ease,border-color 160ms ease,box-shadow 160ms ease,transform 160ms ease)}
+.app-select-value{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.app-select-trigger.is-placeholder .app-select-value{color:var(--text-muted,#6b7280)}
+.app-select-chevron{width:8px;height:8px;flex:0 0 8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translateY(-2px);opacity:.72}
+.app-select-trigger[aria-expanded="true"] .app-select-chevron{transform:rotate(225deg) translate(-1px,-1px)}
+.app-select-trigger:focus-visible{outline:0;border-color:var(--primary,#dc2626);box-shadow:0 0 0 3px color-mix(in srgb,var(--primary,#dc2626) 18%,transparent)}
+.app-select-trigger:disabled{opacity:.48;cursor:not-allowed}
+.app-select-panel{position:fixed;z-index:1100;display:grid;align-content:start;gap:2px;padding:6px;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;border:1px solid var(--border-strong,#d1d5db);border-radius:13px;background:var(--bg-elevated,var(--bg-surface,#fff));color:var(--text-main,#111827);box-shadow:0 18px 45px rgba(15,23,42,.22);box-sizing:border-box;scrollbar-width:thin}
+.app-select-option{width:100%;min-width:0;min-height:42px;display:block;padding:9px 10px;border:0;border-radius:9px;background:transparent;color:inherit;font:inherit;text-align:left;line-height:1.35;overflow-wrap:anywhere;white-space:normal;cursor:pointer}
+.app-select-option[aria-selected="true"]{background:var(--primary-soft,#fef2f2);color:var(--primary-hover,#b91c1c);font-weight:800}
+.app-select-option:focus-visible{outline:2px solid var(--primary,#dc2626);outline-offset:-2px;background:var(--bg-muted,#f1f5f9)}
+.app-select-option:disabled{opacity:.45;cursor:not-allowed}
+.app-select-group{padding:8px 10px 4px;color:var(--text-muted,#6b7280);font-size:10px;font-weight:850;letter-spacing:.08em;text-transform:uppercase}
+@media(hover:hover) and (pointer:fine){.app-select-trigger:not(:disabled):hover{border-color:var(--primary,#dc2626);background:var(--bg-muted,#f8fafc)}.app-select-option:not(:disabled):hover{background:var(--bg-muted,#f1f5f9)}}
+@media(hover:none),(pointer:coarse){.app-select-trigger:not(:disabled):active{transform:scale(.99);background:var(--bg-muted,#f1f5f9)}.app-select-option:not(:disabled):active{background:var(--primary-soft,#fef2f2);transform:scale(.99)}}
+[data-theme="dark"] .app-select-trigger,[data-theme="dark"] .app-select-panel{background:var(--field-bg,var(--bg-surface));color:var(--text-main);border-color:var(--border-strong)}
+[data-theme="dark"] .app-select-option[aria-selected="true"]{background:color-mix(in srgb,var(--primary) 20%,var(--bg-elevated));color:#fda4af}
+[data-theme="dark"] .app-select-option:focus-visible{background:var(--bg-muted)}
+.app-combobox{position:relative;width:100%;max-width:100%;min-width:0;box-sizing:border-box}
+.app-combobox-input{width:100%!important;max-width:100%;min-width:0;padding-right:48px!important;box-sizing:border-box}
+.app-combobox-toggle{position:absolute;top:0;right:0;width:46px;height:100%;min-height:46px;display:grid;place-items:center;border:0;border-left:1px solid var(--border-strong,#d1d5db);border-radius:0 12px 12px 0;background:transparent;color:inherit;cursor:pointer}
+.app-combobox-toggle .app-select-chevron{display:block}
+.app-combobox-toggle:focus-visible{outline:3px solid color-mix(in srgb,var(--primary,#dc2626) 18%,transparent);outline-offset:-3px}
+.app-combobox-panel:empty::before{content:'Type a custom batch name';padding:10px;color:var(--text-muted,#6b7280);font-size:13px}
+@media(hover:hover) and (pointer:fine){.app-combobox-toggle:hover{color:var(--primary,#dc2626);background:var(--bg-muted,#f8fafc)}}
+[data-theme="dark"] .app-combobox-toggle{border-color:var(--border-strong);color:var(--text-main)}

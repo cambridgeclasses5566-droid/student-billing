@@ -1,0 +1,142 @@
+.top-right {
+  margin-left: auto;
+}
+
+.theme-toggle,
+.account-trigger {
+  width: 42px;
+  height: 42px;
+  min-height: 42px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  background: var(--bg-surface, #fff);
+  color: var(--text-main, #111827);
+  display: grid;
+  place-items: center;
+  transition: border-color .18s, background .18s, box-shadow .18s, transform .18s;
+}
+
+.theme-toggle:hover,
+.account-trigger:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 5px 14px rgba(15, 23, 42, .08);
+  transform: translateY(-1px);
+}
+
+.theme-toggle:focus-visible,
+.account-trigger:focus-visible,
+.account-dropdown a:focus-visible,
+.account-dropdown button:focus-visible {
+  outline: 3px solid rgba(220, 38, 38, .22);
+  outline-offset: 2px;
+}
+
+.theme-icon {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.theme-icon-moon {
+  display: none;
+}
+
+.theme-toggle[data-theme="dark"] .theme-icon-sun {
+  display: none;
+}
+
+.theme-toggle[data-theme="dark"] .theme-icon-moon {
+  display: block;
+}
+
+.account-trigger {
+  border: 0;
+  background: var(--red);
+  color: #fff;
+  font-size: .82rem;
+  letter-spacing: .02em;
+}
+
+.account-icon {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.account-trigger:active {
+  transform: translateY(0) scale(.96);
+}
+
+.account-menu {
+  position: relative;
+}
+
+.account-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 60;
+  width: 210px;
+  padding: 7px;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  background: var(--bg-surface, #fff);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, .16);
+}
+
+.account-dropdown[hidden] {
+  display: none;
+}
+
+.account-dropdown a,
+.account-dropdown button {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text-main, #111827);
+  display: flex;
+  align-items: center;
+  text-align: left;
+  font-weight: 650;
+}
+
+.account-dropdown a:hover,
+.account-dropdown button:hover {
+  background: var(--bg-elevated, #f8fafc);
+}
+
+.account-dropdown .account-logout {
+  color: #b91c1c;
+}
+
+.account-dropdown .account-logout:hover {
+  background: #fff1f2;
+}
+
+@media (max-width: 550px) {
+  .top {
+    height: 64px;
+  }
+
+  .top-left,
+  .top-right {
+    gap: 9px;
+  }
+
+  .account-dropdown {
+    width: min(210px, calc(100vw - 28px));
+  }
+}

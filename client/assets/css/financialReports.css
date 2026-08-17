@@ -1,0 +1,71 @@
+.report-filter-bar {
+  align-items: end;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--bg-surface, #fff);
+}
+
+.report-search-field,
+.report-date-field {
+  display: grid;
+  gap: 5px;
+  color: var(--text-muted, #64748b);
+  font-size: .74rem;
+  font-weight: 750;
+}
+
+.report-search-field {
+  flex: 1 1 280px;
+}
+
+.report-search-field input,
+.report-date-field input {
+  width: 100%;
+  min-height: 44px;
+  background: var(--bg-surface, #fff);
+  color: var(--text-main, #111827);
+}
+
+.report-clear {
+  min-height: 44px;
+  padding: 0 6px;
+}
+
+.report-table-card {
+  margin-top: 16px;
+}
+
+@media (max-width: 767px) {
+  .report-filter-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: end;
+  }
+
+  .report-search-field {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 479px) {
+  .report-filter-bar {
+    grid-template-columns: 1fr;
+  }
+
+  .report-search-field {
+    grid-column: auto;
+  }
+
+  .report-filter-bar .btn,
+  .report-clear {
+    width: 100%;
+  }
+}
+
+@media print {
+  .report-filter-bar,
+  .financial-reports-page .page-title .btn {
+    display: none !important;
+  }
+}

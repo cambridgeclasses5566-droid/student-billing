@@ -1,0 +1,3 @@
+import Settings from '../models/InstituteSettings.js';
+export const DEFAULT_RECEIPT={receiptTitle:'Fee Receipt',receiptPrefix:'REC',currency:'INR',receiptThankYouHeading:'Thank you for your payment!',receiptThankYouMessage:'We appreciate your trust in {Institute Name}. Please keep this receipt for your records.',receiptTerms:'',receiptFooter:'This is a computer-generated receipt. No physical signature is required.'};
+export async function initializeInstituteWorkspace(userId,instituteName){const year=new Date().getFullYear();return Settings.findOneAndUpdate({ownerId:userId},{$setOnInsert:{ownerId:userId,instituteName,academicYear:`${year}-${year+1}`,...DEFAULT_RECEIPT}},{new:true,upsert:true,setDefaultsOnInsert:true})}

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Mobile polish verification</title>
+  <link rel="stylesheet" href="../client/assets/css/global.css">
+  <link rel="stylesheet" href="../client/assets/css/dashboard.css">
+  <link rel="stylesheet" href="../client/assets/css/billing-pages.css">
+  <link rel="stylesheet" href="../client/assets/css/student-directory.css">
+  <link rel="stylesheet" href="../client/assets/css/financialReports.css">
+  <link rel="stylesheet" href="../client/assets/css/responsive-dashboard.css">
+  <link rel="stylesheet" href="../client/assets/css/mobile-app.css">
+  <link rel="stylesheet" href="../client/assets/css/app-select.css">
+  <link rel="stylesheet" href="../client/assets/css/receipt.css">
+  <link rel="stylesheet" href="../client/assets/css/theme.css">
+</head>
+<body><main class="workspace">
+  <div class="top-right"><button class="menu" aria-label="Open navigation">☰</button><button class="theme-toggle icon-button" aria-label="Theme">◐</button><button class="avatar account-trigger" aria-label="Account">CP</button></div>
+  <section class="form-card card" id="studentFixture"><h2>Add Student</h2><div class="form-grid">
+    <label class="form-field">Academic Year<select><option>2026–2027 Academic Year</option></select></label>
+    <label class="form-field">Standard<select><option>Standard 10</option></select></label>
+    <label class="form-field">Class / Batch<select><option>Class 10 – Mathematics Advanced Batch</option></select></label>
+    <label class="form-field">Division<select><option>Division A</option></select></label>
+  </div><button class="btn btn-primary">Save Student</button></section>
+  <section class="payment-history-filters mobile-filter-panel" id="historyFixture">
+    <input class="history-search" placeholder="Search receipt, student, ID, reference, or UTR">
+    <select><option>All classes</option></select><select><option>All payment modes</option></select>
+    <select id="historySource"><option>All sources</option></select><input type="date"><input type="date"><button class="btn btn-ghost">Clear</button>
+  </section>
+  <section class="student-directory-filters mobile-filter-panel" id="pendingFixture">
+    <input placeholder="Search name, ID, mobile, parent, or email"><select><option>All standards</option></select>
+    <select><option>All classes</option></select><select><option>All fee statuses</option></select>
+    <select><option>All academic years</option></select><select><option>All enrollments</option></select><button class="btn btn-ghost">Clear All</button>
+  </section>
+  <section class="report-filter-bar mobile-filter-panel" id="reportFixture"><label>From<input type="date"></label><label>To<input type="date"></label><button class="btn btn-primary">Run Report</button><button class="btn btn-secondary">Print</button></section>
+  <section class="form-card card" id="settingsFixture"><h2>Institute Settings</h2><div class="form-grid"><label class="form-field">Currency<select><option>INR</option><option>USD</option></select></label><label class="form-field">Academic year<select><option>2026–2027</option><option>2027–2028</option></select></label><label class="form-field">Time zone<select><option>Asia/Kolkata</option><option>UTC</option></select></label><label class="form-field">Date format<select><option>DD/MM/YYYY</option><option>DD MMM YYYY</option></select></label></div></section>
+  <button class="btn btn-primary">Collect Payment</button><button class="btn btn-secondary">View Receipt</button><button class="icon-button" aria-label="More">⋮</button>
+  <label class="form-field" style="margin-top:420px">Bottom viewport test<select id="bottomSelect"><option>First option</option><option>Second option with a long wrapping label</option><option>Third option</option><option>Fourth option</option><option>Fifth option</option><option>Sixth option</option></select></label>
+  <article class="receipt-pro" id="receiptSignatureFixture">
+    <footer class="receipt-signature">
+      <div class="receipt-signature-space" aria-hidden="true"></div>
+      <div class="receipt-signature-line"></div>
+      <strong>Authorized Signatory</strong>
+    </footer>
+  </article>
+</main><script type="module" src="../client/assets/js/appSelect.js"></script></body></html>

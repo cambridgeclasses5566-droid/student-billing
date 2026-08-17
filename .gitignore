@@ -1,0 +1,12 @@
+node_modules/
+.npm-cache/
+.env
+npm-debug.log*
+coverage/
+server/uploads/logos/*
+!server/uploads/logos/.gitkeep
+server/uploads/payment-proofs/*
+!server/uploads/payment-proofs/.gitkeep
+server/uploads/payment-qr/*
+!server/uploads/payment-qr/.gitkeep
+.DS_Store

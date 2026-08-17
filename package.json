@@ -1,0 +1,42 @@
+{
+  "name": "student-billing-saas",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js",
+    "seed": "node server/seed.js",
+    "fix:payment-indexes": "node server/scripts/fixPaymentIndexes.js",
+    "migrate:money": "node server/scripts/migrateMoneyToPaise.js",
+    "migrate:money:dry": "node server/scripts/migrateMoneyToPaise.js --dry-run",
+    "migrate:academic-structure": "node server/scripts/migrateClassesAndSubjects.js",
+    "migrate:academic-structure:dry": "node server/scripts/migrateClassesAndSubjects.js --dry-run",
+    "migrate:student-billing-focus": "node server/scripts/migrateStudentBillingFocus.js",
+    "migrate:student-billing-focus:dry": "node server/scripts/migrateStudentBillingFocus.js --dry-run",
+    "test": "node --test tests/*.test.js",
+    "test:billing-restart": "node tests/serverRestartSmoke.mjs"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "express-rate-limit": "^7.4.1",
+    "express-validator": "^7.2.0",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.8.1",
+    "morgan": "^1.10.0",
+    "multer": "^2.2.0",
+    "nodemailer": "^9.0.5",
+    "qrcode": "^1.5.4",
+    "razorpay": "^2.9.4"
+  },
+  "devDependencies": {
+    "mongodb-memory-server": "^10.2.0",
+    "nodemon": "^3.1.7",
+    "supertest": "^7.0.0"
+  }
+}

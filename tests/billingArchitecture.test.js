@@ -1,0 +1,8 @@
+import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';
+import Payment from '../server/models/StudentPayment.js';import FeeRequest from '../server/models/StudentFeeRequest.js';
+const indexes=Payment.schema.indexes();
+test('student payments support unlimited installments',()=>{const studentIndexes=indexes.filter(([keys])=>keys.studentId);assert.equal(studentIndexes.some(([,options])=>options.unique===true),false);assert.equal(studentIndexes.some(([keys])=>keys.ownerId===1&&keys.studentId===1&&keys.paymentDate===-1),true)});
+test('receipt, payment, and client request identifiers are owner scoped and unique',()=>{for(const field of ['receiptNumber','paymentId','clientRequestId'])assert.equal(indexes.some(([keys,options])=>keys.ownerId===1&&keys[field]===1&&options.unique===true),true)});
+test('empty transaction references are not globally unique',()=>{assert.equal(indexes.some(([keys,options])=>keys.transactionReference&&options.unique),false);assert.equal(Payment.schema.path('transactionReference').defaultValue,'')});
+test('verified fee request payment link is unique and sparse',()=>{assert.equal(FeeRequest.schema.indexes().some(([keys,options])=>keys.studentPaymentId===1&&options.unique&&options.sparse),true)});
+test('payment index migration drops only known invalid unique student indexes',()=>{const source=fs.readFileSync(new URL('../server/scripts/fixPaymentIndexes.js',import.meta.url),'utf8');assert.match(source,/index\.unique===true/);assert.match(source,/studentId/);assert.doesNotMatch(source,/dropIndexes\s*\(/);assert.doesNotMatch(source,/deleteMany|remove\s*\(/)});

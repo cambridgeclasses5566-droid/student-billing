@@ -1,0 +1,12 @@
+﻿import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import request from 'supertest';
+import app from '../server/app.js';
+const read=p=>readFileSync(p,'utf8');
+test('private UI has UTF-8, complete navigation, and no active SaaS links or Chart dependency',()=>{const html=read('client/dashboard/index.html'),dash=read('client/assets/js/dashboard.js'),nav=read('client/assets/js/workflow-dashboard.js');assert.match(html,/charset="UTF-8"/);assert.doesNotMatch(`${html}${nav}`,/ACTIVE PLAN|payment-settings|Payment Requests|Subscription|new Chart/);assert.doesNotMatch(`${html}${dash}${nav}`,/Ã|Â|â€|â‚|ï¼/);for(const label of ['Dashboard','Students','Add Student','Classes','Collect Payment','Payment History','Pending Fees','Financial Reports','Institute Settings'])assert.match(nav,new RegExp(label));});
+test('dashboard import graph does not reference the removed payment settings module',()=>{const billingPages=read('client/assets/js/billingPages.js');assert.doesNotMatch(billingPages,/paymentSettingsPage/)});
+test('empty, obsolete, and unknown hashes normalize to dashboard',()=>{const dashboard=read('client/assets/js/dashboard.js');assert.match(dashboard,/dashboardPages\.has\(requestedPage\)\?requestedPage:'dashboard'/);for(const page of ['payment-settings','subscription','plans','attendance','attendance-reports'])assert.match(dashboard,new RegExp(`['"]${page}['"]`));assert.match(dashboard,/history\.replaceState\(null,'',location\.pathname\)/)});
+test('removed public and subscription pages redirect to login',async()=>{for(const url of ['/signup','/signup.html','/register','/pricing','/payment','/subscription']){const response=await request(app).get(url);assert.equal(response.status,302,url);assert.equal(response.headers.location,'/login.html')}});
+test('public signup API is disabled',async()=>{const response=await request(app).post('/api/auth/signup').send({});assert.equal(response.status,404)});
+test('protected API still requires login',async()=>{const response=await request(app).get('/api/billing/dashboard');assert.equal(response.status,401)});

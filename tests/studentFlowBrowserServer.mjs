@@ -1,0 +1,20 @@
+import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
+import {MongoMemoryServer} from 'mongodb-memory-server';
+import app from '../server/app.js';
+import User from '../server/models/User.js';
+import ClassModel from '../server/models/Class.js';
+import Student from '../server/models/Student.js';
+import StudentClassEnrollment from '../server/models/StudentClassEnrollment.js';
+import StudentPayment from '../server/models/StudentPayment.js';
+
+const port=Number(process.env.BROWSER_TEST_PORT||4030);process.env.NODE_ENV='test';process.env.JWT_SECRET='browser-student-flow-secret-at-least-32-characters';process.env.COOKIE_SECRET='browser-student-flow-cookie-secret-at-least-32-characters';process.env.CLIENT_URL=`http://127.0.0.1:${port}`;
+const mongo=await MongoMemoryServer.create();await mongoose.connect(mongo.getUri());
+const owner=await User.create({fullName:'Browser Test Admin',email:'browser.student@example.com',mobile:'9876543210',instituteName:'Browser Test Institute',passwordHash:await bcrypt.hash('Student#123',10),emailVerified:true,accountStatus:'active'});
+const [emptyClass,sourceClass]=await ClassModel.create([{ownerId:owner._id,name:'Class 8-A',standard:'8',division:'A',academicYear:'2026-2027',batchName:'Regular Batch',isActive:true,defaultFees:20000},{ownerId:owner._id,name:'Class 8-B',standard:'8',division:'B',academicYear:'2026-2027',batchName:'Regular Batch',isActive:true,defaultFees:20000}]);
+const studentPayload=(studentId,name,aadhaarNumber,mobile)=>({ownerId:owner._id,studentId,name,age:13,dob:new Date('2013-01-10'),email:`${studentId.toLowerCase()}@example.com`,address:'Browser test address',aadhaarNumber,mobile,academicYear:'2026-2027',standard:'8',classId:sourceClass._id,division:'B',fatherName:'Test Father',motherName:'Test Mother',parentsMobileNumber:'9876543219',admissionDate:new Date('2026-06-01'),totalFees:20000,discount:0,finalFees:20000,totalFeesPaise:2000000,discountPaise:0,finalPayablePaise:2000000});
+const [aman,priya]=await Student.create([studentPayload('STU-0001','Aman Verma','111111111111','9876543211'),studentPayload('STU-0002','Priya Patel','222222222222','9876543212')]);
+await StudentClassEnrollment.create([{ownerId:owner._id,studentId:aman._id,classId:sourceClass._id,academicYear:'2026-2027',status:'active'},{ownerId:owner._id,studentId:priya._id,classId:sourceClass._id,academicYear:'2026-2027',status:'active'}]);
+await StudentPayment.create([{ownerId:owner._id,studentId:aman._id,paymentId:'PAY-AMAN-1',receiptNumber:'RCP-AMAN-1',amount:5000,amountPaise:500000,paymentDate:new Date('2026-08-11T10:00:00Z'),paymentMode:'cash',collectedBy:'Browser Test Admin',createdBy:owner._id,status:'completed'},{ownerId:owner._id,studentId:aman._id,paymentId:'PAY-AMAN-2',receiptNumber:'RCP-AMAN-2',amount:3000,amountPaise:300000,paymentDate:new Date('2026-08-12T10:00:00Z'),paymentMode:'upi',collectedBy:'Browser Test Admin',createdBy:owner._id,status:'completed'},{ownerId:owner._id,studentId:priya._id,paymentId:'PAY-PRIYA-1',receiptNumber:'RCP-PRIYA-1',amount:4000,amountPaise:400000,paymentDate:new Date('2026-08-11T12:00:00Z'),paymentMode:'cash',collectedBy:'Browser Test Admin',createdBy:owner._id,status:'completed'}]);
+const server=app.listen(port,'127.0.0.1',()=>console.log(`STUDENT_FLOW_BROWSER_READY:${port}`));
+const stop=async()=>{server.close();await mongoose.disconnect();await mongo.stop();process.exit(0)};process.on('SIGTERM',stop);process.on('SIGINT',stop);

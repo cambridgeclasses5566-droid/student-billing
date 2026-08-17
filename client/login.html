@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <title>Login — ClassPro</title>
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/global.css">
+  <link rel="stylesheet" href="assets/css/auth.css">
+  <link rel="stylesheet" href="assets/css/branding.css">
+</head>
+
+<body class="auth-page" data-page="login">
+
+  <main class="card auth-card">
+
+    <!-- Left / Branding Section -->
+    <aside class="auth-aside">
+
+      <a
+        class="logo product-logo-link"
+        href="/"
+        aria-label="CambridgeclassesHome"
+      >
+        <span class="logo-surface">
+          <img
+            class="product-logo"
+            src="assets/images/NewLogo.png"
+            alt="Cambridgeclasses- Smarter School Management"
+          >
+        </span>
+      </a>
+
+      <div>
+        <h1>Welcome back to simpler institute billing.</h1>
+
+        <p>
+          Securely continue to your students, classes,
+          collections, and reports.
+        </p>
+      </div>
+
+      <small>
+        Protected with encrypted passwords and secure sessions.
+      </small>
+
+    </aside>
+
+    <!-- Login Section -->
+    <section class="auth-main">
+
+      <span class="tag">ACCOUNT ACCESS</span>
+
+      <h2>Sign in to Cambridge Classes</h2>
+
+      <p>
+        Enter your account credentials to continue.
+      </p>
+
+      <!-- Login Message -->
+      <div
+        id="message"
+        class="message"
+        role="status"
+        aria-live="polite"
+      ></div>
+
+      <!-- Login Form -->
+      <form data-auth>
+
+        <!-- Email -->
+        <div class="form-field">
+          <label for="email">Email address</label>
+
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            required
+          >
+        </div>
+
+        <!-- Password -->
+        <div class="form-field">
+          <label for="password">Password</label>
+
+          <div class="password-control">
+            <input
+              id="password"
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              required
+            >
+
+            <button
+              class="password-toggle"
+              data-toggle-password
+              aria-controls="password"
+              aria-label="Show password"
+              type="button"
+            >
+              Show
+            </button>
+          </div>
+        </div>
+
+        <!-- Remember / Forgot Password -->
+        <div class="auth-links">
+
+          <label>
+            <input
+              type="checkbox"
+              name="remember"
+            >
+            Remember me
+          </label>
+
+          <a href="forgot-password">
+            Forgot password?
+          </a>
+
+        </div>
+
+        <!-- Submit -->
+        <button
+          class="btn btn-primary"
+          type="submit"
+        >
+          Login securely
+        </button>
+
+      </form>
+
+    </section>
+
+  </main>
+
+  <!-- Authentication Script -->
+  <script
+    type="module"
+    src="assets/js/auth.js"
+  ></script>
+
+</body>
+</html>

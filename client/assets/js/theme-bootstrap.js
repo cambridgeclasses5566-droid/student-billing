@@ -1,0 +1,1 @@
+(()=>{const value=localStorage.getItem('classespro-theme')||'system',dark=value==='dark'||(value==='system'&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.dataset.theme=dark?'dark':'light';document.documentElement.dataset.themePreference=value;document.documentElement.style.colorScheme=dark?'dark':'light'})();

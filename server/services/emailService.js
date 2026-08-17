@@ -1,0 +1,4 @@
+import {mailer} from '../config/mailer.js';
+export async function sendEmail({to,subject,html}){if(!process.env.EMAIL_HOST)throw Object.assign(new Error('Email delivery is not configured'),{status:503});await mailer.sendMail({from:process.env.EMAIL_FROM,to,subject,html})}
+export const sendOtpEmail=(user,otp)=>sendEmail({to:user.email,subject:'Verify your ClassesPro account',html:`<div style="font-family:Arial;max-width:560px;margin:auto"><h2 style="color:#dc2626">Verify your email</h2><p>Hello ${user.fullName},</p><p>Your ClassesPro verification code is:</p><p style="font-size:30px;font-weight:700;letter-spacing:8px">${otp}</p><p>This code expires in 10 minutes. If you did not request it, ignore this email.</p></div>`});
+export const sendResetEmail=(user,url)=>sendEmail({to:user.email,subject:'Reset your ClassesPro password',html:`<p>Hello ${user.fullName},</p><p><a href="${url}">Reset your password</a>. This link expires in 30 minutes.</p>`});

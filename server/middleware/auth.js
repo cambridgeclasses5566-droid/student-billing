@@ -1,0 +1,5 @@
+import jwt from 'jsonwebtoken';import User from '../models/User.js';
+export async function authenticate(req,res,next){try{const token=req.cookies?.token||req.headers.authorization?.replace(/^Bearer\s+/,'');if(!token)return res.status(401).json({success:false,message:'Authentication required',errors:[]});const payload=jwt.verify(token,process.env.JWT_SECRET);const user=await User.findById(payload.sub);if(!user)return res.status(401).json({success:false,message:'Session is invalid',errors:[]});if(user.accountStatus==='blocked')return res.status(403).json({success:false,message:'Account access is blocked',errors:[]});req.user=user;next()}catch{return res.status(401).json({success:false,message:'Session has expired',errors:[]})}}
+export const authorize=(...roles)=>(req,res,next)=>roles.includes(req.user.role)?next():res.status(403).json({success:false,message:'You are not authorized for this action',errors:[]});
+// Compatibility alias for existing protected routes. Private mode requires login only.
+export function requireActiveSubscription(req,res,next){next()}

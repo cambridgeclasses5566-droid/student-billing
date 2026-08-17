@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Student Billing UI Polish Fixture</title>
+  <link rel="stylesheet" href="/client/assets/css/global.css">
+  <link rel="stylesheet" href="/client/assets/css/dashboard.css">
+  <link rel="stylesheet" href="/client/assets/css/dashboardHeader.css">
+  <link rel="stylesheet" href="/client/assets/css/workflow.css">
+  <link rel="stylesheet" href="/client/assets/css/receipt.css">
+  <link rel="stylesheet" href="/client/assets/css/responsive-dashboard.css">
+  <link rel="stylesheet" href="/client/assets/css/mobile-app.css">
+  <link rel="stylesheet" href="/client/assets/css/theme.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="side" id="sidebar" aria-label="Primary navigation">
+      <button class="mobile-nav-close" id="closeNav" aria-label="Close navigation">×</button>
+      <a class="logo product-logo-link" href="#"><strong>ClassPro</strong></a>
+      <nav>
+        <p class="nav-group">DASHBOARD</p><a class="side-link active" href="#"><span>⌂</span>Dashboard</a>
+        <p class="nav-group">STUDENTS</p><a class="side-link" href="#"><span>♙</span>Students</a><a class="side-link" href="#"><span>＋</span>Add Student</a><a class="side-link" href="#"><span>◇</span>Classes</a>
+        <p class="nav-group">BILLING</p><a class="side-link" href="#"><span>₹</span>Collect Payment</a><a class="side-link" href="#"><span>↻</span>Payment History</a><a class="side-link" href="#"><span>!</span>Pending Fees</a>
+        <p class="nav-group">REPORTS</p><a class="side-link" href="#"><span>↗</span>Financial Reports</a>
+        <p class="nav-group">ACCOUNT</p><a class="side-link" href="#"><span>⚙</span>Institute Settings</a>
+      </nav>
+      <div class="side-foot"><button class="side-link" style="width:100%;border:0;background:transparent"><span>↪</span>Logout</button></div>
+    </aside>
+    <div class="drawer-overlay" id="overlay"></div>
+    <div class="main">
+      <header class="top"><button class="menu" id="openNav" aria-label="Open navigation">☰</button><div class="top-right"><button class="theme-toggle" id="themeToggle" aria-label="Switch theme">◐</button><button class="account-trigger" aria-label="Open account menu">AM</button></div></header>
+      <main class="workspace">
+        <section class="card panel" aria-label="Button interaction examples"><h2>Button states</h2><div class="form-actions"><button class="btn btn-primary">Save Settings</button><button class="btn btn-secondary">Preview Receipt</button><button class="btn btn-ghost">Back</button><button class="btn btn-danger">Remove Logo</button><button class="icon-button" aria-label="More options">•••</button><button class="btn btn-primary" disabled>Disabled</button></div></section>
+        <section class="logo-upload-card" style="margin-top:18px"><h3>Institute logo</h3><div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap"><img class="logo-preview" src="/client/assets/images/NewLogo.png" alt="Current institute logo"><div><input type="file" hidden><button class="btn btn-secondary">Replace logo</button> <button class="btn btn-danger">Remove logo</button><p style="font-size:12px;color:var(--muted)">PNG, JPG, JPEG, or WebP · maximum 2 MB</p><div class="message"></div></div></div></section>
+        <article class="receipt-pro" style="margin-top:18px">
+          <section class="receipt-section"><h3>Student Details</h3><div class="receipt-detail-grid receipt-student-details">
+            <div class="receipt-detail-item"><small>Student Name</small><strong>Sample Student</strong></div><div class="receipt-detail-item"><small>Student ID</small><strong>STU-0003</strong></div><div class="receipt-detail-item"><small>Student Mobile</small><strong>9876543210</strong></div><div class="receipt-detail-item"><small>Class / Batch</small><strong>Class 10 Mathematics</strong></div><div class="receipt-detail-item"><small>Standard</small><strong>10</strong></div><div class="receipt-detail-item"><small>Division</small><strong>A</strong></div><div class="receipt-detail-item"><small>Academic Year</small><strong>2026-2027</strong></div><div class="receipt-detail-item"><small>Admission Date</small><strong>14/08/2026</strong></div><div class="receipt-detail-item"><small>Email</small><strong>sample.student@example.com</strong></div>
+          </div></section>
+          <div class="receipt-finance-grid"><section class="receipt-section receipt-summary-section"><h3>Payment Summary</h3><table class="receipt-summary"><tbody><tr><td>Total Payable</td><td>₹18,000</td></tr><tr class="received"><td>Amount Received</td><td>₹5,000</td></tr></tbody></table></section><section class="receipt-section receipt-payment-section"><h3>Payment Details</h3><div class="receipt-detail-grid receipt-payment-details"><div class="receipt-detail-item"><small>Payment Mode</small><strong>Google Pay / UPI</strong></div><div class="receipt-detail-item"><small>Transaction ID / UTR</small><strong>SAMPLE-REFERENCE-LONG-WRAPPING-VALUE</strong></div><div class="receipt-detail-item"><small>Collected By</small><strong>Anita Mehta</strong></div><div class="receipt-detail-item"><small>Payment Notes</small><strong>August installment</strong></div></div></section></div>
+        </article>
+      </main>
+    </div>
+  </div>
+  <script>
+    const sidebar=document.querySelector('#sidebar'),overlay=document.querySelector('#overlay');
+    document.querySelector('#openNav').onclick=()=>{sidebar.classList.add('open');overlay.classList.add('show')};
+    document.querySelector('#closeNav').onclick=()=>{sidebar.classList.remove('open');overlay.classList.remove('show')};
+    document.querySelector('#themeToggle').onclick=()=>document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark';
+  </script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+import {get} from './api.js';import {escapeHTML} from './ui.js';
+export async function loadOnboardingStatus(){return get('/onboarding/status')}
+export function renderOnboarding(data){return `<section class="card onboarding-card" id="setupChecklist"><div class="setup-head"><div><span class="tag">GET STARTED</span><h2>Complete Your Setup</h2><p>Follow these steps to start billing students.</p></div><button class="icon-button" id="collapseSetup">−</button></div><div class="setup-steps">${data.steps.map(step=>`<a href="${escapeHTML(step.href)}" class="setup-step ${step.complete?'done':''}"><span>${step.complete?'✓':'○'}</span>${escapeHTML(step.label)}</a>`).join('')}</div></section>`}

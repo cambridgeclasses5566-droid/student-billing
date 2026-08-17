@@ -1,0 +1,556 @@
+/* Consolidated responsive app-shell and dashboard behavior. */
+.app,
+.main,
+.workspace,
+.workspace > *,
+.page-header > *,
+.page-title > *,
+.card,
+.panel,
+.kpi,
+.dash-grid > *,
+.class-grid > *,
+.form-grid > *,
+.toolbar > * {
+  min-width: 0;
+}
+
+.main {
+  width: auto;
+}
+
+.workspace {
+  box-sizing: border-box;
+}
+
+.mobile-nav-close {
+  display: none;
+}
+
+.kpi strong,
+.fee-cards strong {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  font-size: clamp(1.25rem, 2.1vw, 1.5rem);
+}
+
+.table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.profile-tabs,
+.billing-tabs,
+.tabs {
+  max-width: 100%;
+  scrollbar-width: thin;
+}
+
+@media (max-width: 1200px) {
+  .workspace {
+    padding: 20px;
+  }
+
+  .kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .dash-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .class-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* The fixed desktop filter tracks were wider than the post-sidebar workspace at
+   common laptop/desktop widths, pushing the clear button outside the page. */
+@media (min-width: 1281px) and (max-width: 1530px) {
+  .payment-history-filters {
+    grid-template-columns: minmax(180px, 1.7fr) repeat(5, minmax(100px, 1fr)) auto;
+  }
+}
+
+@media (max-width: 1023px) {
+  .main {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .top {
+    z-index: 60;
+  }
+
+  .menu {
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    padding: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    color: var(--text-main);
+  }
+
+  .side {
+    width: min(84vw, 320px);
+    max-width: 320px;
+    z-index: 80 !important;
+    transform: translateX(-105%);
+    transition: transform .22s ease;
+    overflow: hidden;
+    padding: max(18px, env(safe-area-inset-top)) 16px max(18px, env(safe-area-inset-bottom));
+    box-shadow: 20px 0 50px rgba(15, 23, 42, .24);
+    pointer-events: auto;
+  }
+
+  .side.open {
+    transform: translateX(0);
+  }
+
+  .side nav {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-bottom: 12px;
+  }
+
+  .side .logo {
+    padding: 4px 42px 16px 4px;
+  }
+
+  .side .product-logo-link {
+    width: min(160px, 100%);
+  }
+
+  .mobile-nav-close {
+    position: absolute;
+    top: max(14px, env(safe-area-inset-top));
+    right: 14px;
+    z-index: 2;
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    padding: 0;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: var(--bg-elevated);
+    color: var(--text-main);
+    font-size: 1.55rem;
+    line-height: 1;
+  }
+
+  .drawer-overlay.show {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 70 !important;
+    background: rgba(15, 23, 42, .58);
+    backdrop-filter: blur(1px);
+    pointer-events: auto;
+  }
+
+  body.mobile-nav-open {
+    overflow: hidden;
+    touch-action: none;
+  }
+
+  .side-link {
+    min-height: 44px;
+  }
+
+  .page-header,
+  .page-title {
+    flex-wrap: wrap;
+  }
+
+  .student-hero {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 767px) {
+  .top {
+    width: 100%;
+    height: 64px;
+    padding: 0 max(14px, env(safe-area-inset-right)) 0 max(14px, env(safe-area-inset-left));
+  }
+
+  .top-left,
+  .top-right {
+    min-width: 0;
+  }
+
+  .workspace {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: visible;
+    padding: 16px max(16px, env(safe-area-inset-right)) calc(80px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  }
+
+  .page-header,
+  .page-title,
+  .section-header,
+  .student-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+    align-items: stretch;
+  }
+
+  .page-header h1,
+  .page-title h1,
+  .student-hero h1 {
+    font-size: clamp(1.5rem, 7vw, 1.75rem);
+    line-height: 1.18;
+    overflow-wrap: anywhere;
+  }
+
+  .page-header > .btn,
+  .page-header > a.btn,
+  .page-title > .btn,
+  .page-title > a.btn {
+    width: 100%;
+  }
+
+  .kpis,
+  .fee-cards,
+  .class-grid,
+  .card-grid,
+  .action-explain {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .kpi,
+  .panel,
+  .class-card,
+  .form-card,
+  .profile-info-card {
+    max-width: 100%;
+  }
+
+  .dash-grid {
+    gap: 14px;
+  }
+
+  .quick {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .form-grid,
+  .dialog-form-grid,
+  .profile-field-grid,
+  .profile-info-grid,
+  .payment-settings-layout,
+  .settings-layout {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .form-field,
+  .form-field input,
+  .form-field select,
+  .form-field textarea,
+  .toolbar input,
+  .toolbar select {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .form-actions,
+  .hero-actions,
+  .card-actions,
+  .class-student-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 9px;
+  }
+
+  .form-actions .btn,
+  .hero-actions .btn,
+  .card-actions .btn,
+  .class-student-actions .btn {
+    width: 100%;
+  }
+
+  .class-card {
+    width: 100%;
+    min-height: 0;
+  }
+
+  .class-card .card-actions,
+  .class-card > .card-actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .profile-tabs,
+  .billing-tabs,
+  .tabs {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    scroll-snap-type: x proximity;
+  }
+
+  .profile-tabs > *,
+  .billing-tabs > *,
+  .tabs > * {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+
+  .collect-student-result {
+    align-items: flex-start;
+    display: grid;
+    gap: 8px;
+    text-align: left;
+  }
+
+  .receipt-row {
+    min-width: 0;
+    gap: 12px;
+  }
+
+  .receipt-row > * {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .app-modal-backdrop {
+    padding: 16px;
+    align-items: center;
+  }
+
+  .app-modal-backdrop > .app-modal {
+    width: 100%;
+    height: auto;
+    max-height: calc(100dvh - 32px);
+    align-items: stretch;
+  }
+
+  .app-modal-backdrop .app-modal-dialog,
+  .app-modal > .modal-shell,
+  .app-modal > .modal-body,
+  .app-modal > .form-dialog {
+    width: 100% !important;
+    max-width: 100%;
+    height: auto;
+    max-height: calc(100dvh - 32px);
+    border-radius: 18px;
+  }
+
+  .dialog-body,
+  .app-modal-body,
+  .modal-content {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  /* Student directory and Pending Fees become labeled mobile cards. */
+  #directoryRows,
+  #directoryRows tr,
+  #directoryRows td,
+  #historyRows,
+  #historyRows tr,
+  #historyRows td,
+  #reportRows,
+  #reportRows tr,
+  #reportRows td,
+  .class-profile-content tbody,
+  .class-profile-content tbody tr,
+  .class-profile-content tbody td {
+    display: block;
+    width: 100%;
+    white-space: normal;
+  }
+
+  #directoryRows tr,
+  #historyRows tr,
+  #reportRows tr,
+  .class-profile-content tbody tr {
+    margin: 0 0 12px;
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--bg-surface);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, .05);
+  }
+
+  #directoryRows td,
+  #historyRows td,
+  #reportRows td,
+  .class-profile-content tbody td {
+    min-height: 34px;
+    padding: 6px 0;
+    border: 0;
+    text-align: right;
+    overflow-wrap: anywhere;
+  }
+
+  #directoryRows td:not(.empty),
+  #historyRows td:not(.empty),
+  #reportRows td:not(.empty),
+  .class-profile-content tbody td:not(.empty) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  #directoryRows td::before,
+  #historyRows td::before,
+  #reportRows td::before,
+  .class-profile-content tbody td::before {
+    flex: 0 0 auto;
+    color: var(--text-muted);
+    font-size: .72rem;
+    font-weight: 800;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+  }
+
+  #directoryRows td:nth-child(1)::before { content: 'Student ID'; }
+  #directoryRows td:nth-child(2)::before { content: 'Student'; }
+  #directoryRows td:nth-child(3)::before { content: 'Class'; }
+  #directoryRows td:nth-child(4)::before { content: 'Mobile'; }
+  #directoryRows td:nth-child(5)::before { content: 'Payable'; }
+  #directoryRows td:nth-child(6)::before { content: 'Paid'; }
+  #directoryRows td:nth-child(7)::before { content: 'Remaining'; }
+  #directoryRows td:nth-child(8)::before { content: 'Status'; }
+  #directoryRows td:nth-child(9)::before { content: 'Action'; }
+
+  #historyRows td:nth-child(1)::before { content: 'Receipt'; }
+  #historyRows td:nth-child(2)::before { content: 'Student'; }
+  #historyRows td:nth-child(3)::before { content: 'Class'; }
+  #historyRows td:nth-child(4)::before { content: 'Amount'; }
+  #historyRows td:nth-child(5)::before { content: 'Mode'; }
+  #historyRows td:nth-child(6)::before { content: 'Reference'; }
+  #historyRows td:nth-child(7)::before { content: 'Date'; }
+  #historyRows td:nth-child(8)::before { content: 'Source'; }
+  #historyRows td:nth-child(9)::before { content: 'Action'; }
+
+  #reportRows td:nth-child(1)::before { content: 'Receipt'; }
+  #reportRows td:nth-child(2)::before { content: 'Date'; }
+  #reportRows td:nth-child(3)::before { content: 'Student'; }
+  #reportRows td:nth-child(4)::before { content: 'Student ID'; }
+  #reportRows td:nth-child(5)::before { content: 'Class'; }
+  #reportRows td:nth-child(6)::before { content: 'Mode'; }
+  #reportRows td:nth-child(7)::before { content: 'Amount'; }
+
+  .class-profile-content tbody td:nth-child(1)::before { content: 'Student ID'; }
+  .class-profile-content tbody td:nth-child(2)::before { content: 'Student'; }
+  .class-profile-content tbody td:nth-child(3)::before { content: 'Mobile'; }
+  .class-profile-content tbody td:nth-child(4)::before { content: 'Payable'; }
+  .class-profile-content tbody td:nth-child(5)::before { content: 'Paid'; }
+  .class-profile-content tbody td:nth-child(6)::before { content: 'Remaining'; }
+  .class-profile-content tbody td:nth-child(7)::before { content: 'Status'; }
+  .class-profile-content tbody td:nth-child(8)::before { content: 'Action'; }
+
+  #directoryRows td:last-child .btn,
+  #historyRows td:last-child .btn,
+  .class-profile-content tbody td:last-child .btn {
+    width: min(180px, 100%);
+  }
+
+  #directoryRows .empty,
+  #historyRows .empty,
+  #reportRows .empty,
+  .class-profile-content tbody .empty {
+    text-align: center;
+  }
+
+  #directoryRows .empty::before,
+  #historyRows .empty::before,
+  #reportRows .empty::before,
+  .class-profile-content tbody .empty::before {
+    content: none;
+  }
+
+  #directoryRows:empty,
+  #historyRows:empty,
+  #reportRows:empty {
+    display: block;
+  }
+
+  .table-card > .table-scroll > table:has(#directoryRows),
+  .table-card > .table-scroll > table:has(#historyRows),
+  .table-card > .table-scroll > table:has(#reportRows),
+  .class-profile-content table {
+    display: block;
+    white-space: normal;
+  }
+
+  .table-card > .table-scroll > table:has(#directoryRows) thead,
+  .table-card > .table-scroll > table:has(#historyRows) thead,
+  .table-card > .table-scroll > table:has(#reportRows) thead,
+  .class-profile-content table thead {
+    display: none;
+  }
+
+  .table-card:has(#directoryRows),
+  .table-card:has(#historyRows),
+  .table-card:has(#reportRows),
+  .class-profile-content .table-card {
+    overflow: visible;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .table-card:has(#directoryRows) .table-scroll,
+  .table-card:has(#historyRows) .table-scroll,
+  .table-card:has(#reportRows) .table-scroll,
+  .class-profile-content .table-scroll {
+    overflow: visible;
+  }
+
+  .directory-pagination {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--bg-surface);
+  }
+}
+
+@media (max-width: 430px) {
+  .workspace {
+    padding-left: max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+  }
+
+  .top {
+    padding-left: max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+  }
+
+  .card,
+  .panel,
+  .form-card,
+  .form-section {
+    border-radius: 16px;
+  }
+
+  .kpi,
+  .panel,
+  .class-card,
+  .profile-info-card {
+    padding: 16px;
+  }
+
+  .dialog-header,
+  .dialog-body,
+  .dialog-footer,
+  .app-modal-body,
+  .modal-content {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+}
