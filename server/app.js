@@ -20,7 +20,7 @@ import { uploadsRoot } from "./services/logoStorageService.js";
 import { paymentQrRoot } from "./services/paymentQrStorageService.js";
 
 const app = express(),
-  root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../client");
+  root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../public");
 app.set("trust proxy", 1);
 app.use(
   helmet({
