@@ -16,7 +16,6 @@ import enrollmentRoutes from "./routes/enrollmentRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import { apiLimiter } from "./middleware/rateLimiters.js";
 import { errorHandler, notFound } from "./middleware/errorHandler.js";
-import { uploadsRoot } from "./services/logoStorageService.js";
 import { paymentQrRoot } from "./services/paymentQrStorageService.js";
 
 const app = express(),
@@ -56,16 +55,6 @@ if (process.env.NODE_ENV !== "test") app.use(morgan(process.env.NODE_ENV === "pr
 app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
-app.use(
-  "/uploads/logos",
-  express.static(uploadsRoot, {
-    dotfiles: "deny",
-    fallthrough: false,
-    index: false,
-    maxAge: process.env.NODE_ENV === "production" ? "1d" : 0,
-    setHeaders: (res) => res.setHeader("X-Content-Type-Options", "nosn"),
-  }),
-);
 app.use(
   "/uploads/payment-qr",
   express.static(paymentQrRoot, {
