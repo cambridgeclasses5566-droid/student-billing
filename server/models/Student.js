@@ -18,7 +18,11 @@ const schema = new mongoose.Schema(
     },
     academicYear: { type: String, required: true, trim: true },
     standard: { type: String, required: true, trim: true },
-    classId: { type: mongoose.Schema.Types.ObjectId, ref: "Class", required: true },
+    classId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Class",
+      default: null,
+    },
     division: { type: String, required: true, trim: true },
     fatherName: { type: String, required: true, trim: true },
     motherName: { type: String, required: true, trim: true },
