@@ -13,6 +13,7 @@
 
 .product-logo {
   display: block;
+  width: 100%;
   height: auto;
   max-height: 82px;
   object-fit: contain;
