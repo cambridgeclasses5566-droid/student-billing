@@ -5,7 +5,7 @@
   --receipt-text: #111827;
   --receipt-muted: #64748b;
   --receipt-border: #e2e8f0;
-  --receipt-red: #dc2626;
+  --receipt-red: #006643;
   --receipt-red-dark: #991b1b;
   --receipt-red-soft: #fef2f2;
   width: 100%;
@@ -257,7 +257,7 @@
     margin: 0;
     padding: 8mm;
     border: 0;
-    border-top: 5px solid #dc2626;
+    border-top: 5px solid #006643;
     border-radius: 0;
     background: #fff !important;
     color: #111827 !important;

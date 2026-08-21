@@ -252,7 +252,7 @@ export async function generateReceiptPDF(model, filename) {
   };
   const sectionTitle = (title) => {
     ensureSpace(12);
-    doc.setTextColor(153, 27, 27);
+    doc.setTextColor(0, 102, 67);
     doc.setFont("helvetica", "bold");
     doc.setFontSize(9);
     doc.text(title.toUpperCase(), margin, y);
@@ -282,7 +282,7 @@ export async function generateReceiptPDF(model, filename) {
       doc.setFont("helvetica", "normal");
       y += 10;
     });
-  doc.setFillColor(220, 38, 38);
+  doc.setFillColor(0, 102, 67);
   doc.rect(0, 0, pageWidth, 6, "F");
   let logoWidth = 24,
     logoHeight = 18;
@@ -308,7 +308,7 @@ export async function generateReceiptPDF(model, filename) {
   doc.setFontSize(8);
   doc.setTextColor(107, 114, 128);
   doc.text(doc.splitTextToSize([model.address, model.mobile, model.email].filter((value) => value && value !== EMPTY).join("\n"), 88), brandX, y + 11);
-  doc.setTextColor(220, 38, 38);
+  doc.setTextColor(0, 102, 67);
   doc.setFont("helvetica", "bold");
   doc.setFontSize(12);
   doc.text(model.receiptTitle, pageWidth - margin, y + 4, { align: "right" });
@@ -341,7 +341,7 @@ export async function generateReceiptPDF(model, filename) {
   y += 3;
   doc.setFillColor(254, 242, 242);
   doc.roundedRect(margin, y - 5, contentWidth, 18, 2, 2, "F");
-  doc.setTextColor(153, 27, 27);
+  doc.setTextColor(0, 102, 67);
   doc.setFont("helvetica", "bold");
   doc.setFontSize(10);
   doc.text(model.thankYouHeading, margin + 4, y + 1);
