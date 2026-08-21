@@ -40,15 +40,15 @@
 .receipt-brand-block h2 { margin: 0 0 5px; color: var(--receipt-text); font-size: 20px; line-height: 1.25; }
 .receipt-brand-block p { margin: 2px 0; color: var(--receipt-muted); font-size: 11px; overflow-wrap: anywhere; }
 .receipt-title-block { display: grid; gap: 4px; align-content: start; text-align: right; }
-.receipt-title-block span { color: var(--receipt-red); font-size: 17px; font-weight: 900; letter-spacing: .055em; text-transform: uppercase; }
+.receipt-title-block span { color:#006643; font-size: 17px; font-weight: 900; letter-spacing: .055em; text-transform: uppercase; }
 .receipt-title-block strong { color: var(--receipt-text); font-size: 13px; overflow-wrap: anywhere; }
 .receipt-title-block small { color: var(--receipt-muted); font-size: 11px; }
 
 .receipt-section { min-width: 0; margin-top: 18px; }
-.receipt-section > h3, .receipt-terms h3 { margin: 0 0 9px; color: var(--receipt-red-dark); font-size: 10px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+.receipt-section > h3, .receipt-terms h3 { margin: 0 0 9px; color: #006643; font-size: 10px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
 .receipt-detail-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; padding: 1px; overflow: hidden; border-radius: 12px; background: var(--receipt-border); }
 .receipt-detail-item { min-width: 0; display: grid; grid-template-columns: 1fr; gap: 3px; align-items: start; padding: 10px 11px; background: var(--receipt-surface); }
-.receipt-detail-item small { color: var(--receipt-muted); font-size: 9px; font-weight: 700; }
+.receipt-detail-item small { color: #334155; font-size: 9px; font-weight: 700; }
 .receipt-detail-item strong { color: var(--receipt-text); font-size: 11px; overflow-wrap: anywhere; }
 
 .receipt-finance-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 15px; margin-top: 18px; align-items: stretch; }
@@ -60,17 +60,17 @@
 
 .receipt-summary { width: 100%; border-collapse: separate; border-spacing: 0 4px; white-space: normal; }
 .receipt-summary td { padding: 9px 11px; background: var(--receipt-surface); }
-.receipt-summary td:first-child { border-radius: 9px 0 0 9px; color: var(--receipt-muted); font-size: 11px; }
+.receipt-summary td:first-child { border-radius: 9px 0 0 9px; color: #334155; font-size: 11px; }
 .receipt-summary td:last-child { border-radius: 0 9px 9px 0; color: var(--receipt-text); text-align: right; font-size: 12px; font-weight: 800; }
 .receipt-summary tr.discount td { color: #64748b; }
 .receipt-summary tr.received td, .receipt-summary tr.balance-clear td { background: #f0fdf4; color: #166534; }
 .receipt-summary tr.balance-due td { background: #fff7ed; color: #9a3412; }
 
 .receipt-thanks { margin-top: 18px; padding: 15px; border: 1px solid #fee2e2; border-radius: 13px; background: linear-gradient(135deg, var(--receipt-red-soft), var(--receipt-paper)); }
-.receipt-thanks h3 { margin: 0 0 5px; color: var(--receipt-red); font-size: 14px; }
+.receipt-thanks h3 { margin: 0 0 5px; color: #006643; font-size: 14px; }
 .receipt-thanks p, .receipt-terms p { margin: 0; color: var(--receipt-muted); font-size: 11px; white-space: pre-line; }
 .receipt-terms { margin-top: 15px; padding: 13px 14px; border: 1px solid var(--receipt-border); border-radius: 12px; background: #fbfcfe; }
-.receipt-terms h3 { margin-bottom: 6px; color: #475569; }
+.receipt-terms h3 { margin-bottom: 6px; color:  #006643; }
 
 .receipt-pro-footer { display: grid; grid-template-columns: minmax(0, 1fr) minmax(180px, .36fr); gap: 30px; align-items: end; margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--receipt-border); }
 .receipt-footer-note { color: var(--receipt-muted); font-size: 10px; }
@@ -80,6 +80,104 @@
 .receipt-signature-line { display: block; height: 1px; background: #4b5563; }
 .receipt-signature strong { margin-top: 6px; color: var(--receipt-text); font-size: 10px; }
 .receipt-signature small { margin-top: 2px; color: var(--receipt-muted); font-size: 9px; }
+
+/* =========================
+   Signature + Stamp
+========================= */
+
+/* =========================================
+   RECEIPT SIGNATURE + STAMP
+========================================= */
+
+.receipt-signature {
+  position: relative;
+  width: 240px;
+  max-width: 100%;
+  margin-left: auto;
+  text-align: center;
+}
+
+/* Wrapper only for signature image area */
+.receipt-auth-images {
+  position: relative;
+  width: 240px;
+  height: 70px;
+  margin-left: auto;
+  margin-bottom: 2px;
+}
+
+/* Signature stays centered above the line */
+.receipt-signature-image {
+  position: absolute;
+  left: 50%;
+  bottom: 2px;
+
+  width: 115px;
+  height: 50px;
+
+  object-fit: contain;
+  object-position: center;
+
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+/* Stamp is OUTSIDE the line area, on the left */
+.receipt-stamp-image {
+  position: absolute;
+
+  left: -40px;
+  bottom: -25px;
+
+  width: 110px;
+  height: 110px;
+
+  object-fit: contain;
+  object-position: center;
+
+  opacity: 0.95;
+  z-index: 3;
+}
+
+/* Signature line */
+.receipt-signature-line {
+  display: block;
+  width: 240px;
+  border-top: 1px solid #334155;
+  margin-left: auto;
+}
+
+/* Label */
+.receipt-signature strong {
+  display: block;
+  margin-top: 5px;
+  text-align: center;
+}
+
+.receipt-signature-line {
+  display: block;
+  width: 210px;
+  border-top: 1px solid #334155;
+  margin-left: auto;
+}
+.receipt-signature {
+  width: 220px;
+  max-width: 100%;
+  text-align: center;
+  margin-left: auto;
+}
+
+.receipt-signature strong {
+  display: block;
+  margin-top: 5px;
+  font-size: 11px;
+}
+
+.receipt-signature small {
+  display: block;
+  margin-top: 3px;
+  font-size: 10px;
+}
 
 .settings-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(380px, .9fr); gap: 18px; align-items: start; }
 .receipt-preview-sticky { position: sticky; top: 95px; padding: 14px; border: 1px solid var(--border); border-radius: 18px; background: var(--bg-surface); }

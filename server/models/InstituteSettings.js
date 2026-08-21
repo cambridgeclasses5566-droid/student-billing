@@ -14,6 +14,14 @@ const schema = new mongoose.Schema(
 
     instituteName: String,
     logoUrl: String,
+    signatureUrl: {
+      type: String,
+      default: "",
+    },
+    stampUrl: {
+      type: String,
+      default: "",
+    },
     address: String,
     mobile: String,
     email: String,

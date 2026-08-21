@@ -90,15 +90,22 @@ export function createReceiptModel(payment = {}, student = {}, studentPayments =
     totalPaid: fromPaise(previousPaidPaise + currentPaise),
     remaining: fromPaise(Math.max(0, balanceAfterPaise)),
     instituteName,
+
     logoUrl: settings.logoUrl || "",
+    signatureUrl: settings.signatureUrl || "",
+    stampUrl: settings.stampUrl || "",
+
     address: asText(settings.address),
     mobile: asText(settings.mobile),
     email: asText(settings.email),
+
     thankYouHeading: String(settings.receiptThankYouHeading || "").trim() || "Thank you for your payment!",
+
     thankYouMessage: replaceInstitute(
       String(settings.receiptThankYouMessage || "").trim() || "We appreciate your trust in {Institute Name}. Please keep this receipt for your records.",
       instituteName,
     ),
+
     terms: String(settings.receiptTerms || "").trim(),
     footer: String(settings.receiptFooter || "").trim(),
     signatory: String(settings.authorizedSignatory || "").trim(),
@@ -152,7 +159,44 @@ export function renderReceiptHTML(model) {
     .map(([label, value, style]) => `<tr class="${style}"><td>${escapeHTML(label)}</td><td>${escapeHTML(value)}</td></tr>`)
     .join("")}</tbody></table></section>`;
   const paymentDetails = `<section class="receipt-section receipt-payment-section"><h3>Payment Details</h3><div class="receipt-detail-grid receipt-payment-details">${detailGrid(receiptPaymentDetailRows(model))}</div></section>`;
-  return `<article class="receipt-pro"><header class="receipt-pro-head"><div class="receipt-brand-block">${brand}<div><h2>${escapeHTML(model.instituteName)}</h2><p>${escapeHTML(model.address)}</p><p>${escapeHTML(model.mobile)}</p><p>${escapeHTML(model.email)}</p></div></div><div class="receipt-title-block"><span>${escapeHTML(model.receiptTitle)}</span><strong>${escapeHTML(model.receiptNumber)}</strong><small>${escapeHTML(model.formattedDate)}</small></div></header><section class="receipt-section"><h3>Student Details</h3><div class="receipt-detail-grid receipt-student-details">${detailGrid(studentRows)}</div></section><div class="receipt-finance-grid">${summary}${paymentDetails}</div><section class="receipt-thanks"><h3>${escapeHTML(model.thankYouHeading)}</h3><p>${escapeHTML(model.thankYouMessage)}</p></section>${model.terms ? `<section class="receipt-terms"><h3>Terms &amp; Conditions</h3><p>${escapeHTML(model.terms)}</p></section>` : ""}<footer class="receipt-pro-footer"><div class="receipt-footer-note"><p>${escapeHTML(model.footer || EMPTY)}</p></div><div class="receipt-signature"><div class="receipt-signature-space" aria-hidden="true"></div><span class="receipt-signature-line" aria-hidden="true"></span><strong>Authorized Signature</strong>${model.signatory ? `<small>${escapeHTML(model.signatory)}</small>` : ""}</div></footer></article>`;
+  return `<article class="receipt-pro"><header class="receipt-pro-head"><div class="receipt-brand-block">${brand}<div><h2>${escapeHTML(model.instituteName)}</h2><p>${escapeHTML(model.address)}</p><p>${escapeHTML(model.mobile)}</p><p>${escapeHTML(model.email)}</p></div></div><div class="receipt-title-block"><span>${escapeHTML(model.receiptTitle)}</span><strong>${escapeHTML(model.receiptNumber)}</strong><small>${escapeHTML(model.formattedDate)}</small></div></header><section class="receipt-section"><h3>Student Details</h3><div class="receipt-detail-grid receipt-student-details">${detailGrid(studentRows)}</div></section><div class="receipt-finance-grid">${summary}${paymentDetails}</div><section class="receipt-thanks"><h3>${escapeHTML(model.thankYouHeading)}</h3><p>${escapeHTML(model.thankYouMessage)}</p></section>${model.terms ? `<section class="receipt-terms"><h3>Terms &amp; Conditions</h3><p>${escapeHTML(model.terms)}</p></section>` : ""}
+  <footer class="receipt-pro-footer">
+
+  <div class="receipt-footer-note">
+    <p>${escapeHTML(model.footer || EMPTY)}</p>
+  </div>
+
+  <div class="receipt-signature">
+    <div class="receipt-auth-images">
+      ${
+        model.stampUrl
+          ? `<img
+              class="receipt-stamp-image"
+              src="${escapeHTML(model.stampUrl)}"
+              alt="Institute stamp"
+            >`
+          : ""
+      }
+
+      ${
+        model.signatureUrl
+          ? `<img
+              class="receipt-signature-image"
+              src="${escapeHTML(model.signatureUrl)}"
+              alt="Authorized signature"
+            >`
+          : ""
+      }
+    </div>
+    <span
+      class="receipt-signature-line"
+      aria-hidden="true"
+    ></span>
+    <strong>Authorized Signature</strong>
+    ${model.signatory ? `<small>${escapeHTML(model.signatory)}</small>` : ""}
+  </div>
+</footer>
+  </article>`;
 }
 
 async function imageForPdf(url) {
@@ -186,9 +230,20 @@ export async function generateReceiptPDF(model, filename) {
     margin = 15,
     contentWidth = 180;
   let y = 15,
-    logo = null;
+    logo = null,
+    signatureImage = null,
+    stampImage = null;
+
   try {
     logo = await imageForPdf(model.logoUrl);
+  } catch {}
+
+  try {
+    signatureImage = await imageForPdf(model.signatureUrl);
+  } catch {}
+
+  try {
+    stampImage = await imageForPdf(model.stampUrl);
   } catch {}
   const ensureSpace = (height) => {
     if (y + height <= pageHeight - margin) return;
@@ -313,13 +368,56 @@ export async function generateReceiptPDF(model, filename) {
   doc.setFont("helvetica", "normal");
   doc.setFontSize(7.5);
   doc.text(doc.splitTextToSize(model.footer || EMPTY, 95), margin, y);
-  const signatureLineY = y + 17;
+  const signatureLineY = y + 24;
+
+  const signatureX = pageWidth - 70;
+  const signatureWidth = 55;
+
+  /* Stamp */
+  if (stampImage) {
+    const stampSize = 24;
+
+    doc.addImage(stampImage.data, "PNG", signatureX - 12, signatureLineY - 26, stampSize, stampSize, undefined, "FAST");
+  }
+
+  /* Signature */
+  if (signatureImage) {
+    const ratio = signatureImage.width / signatureImage.height;
+
+    let sigWidth = 38;
+    let sigHeight = sigWidth / ratio;
+
+    if (sigHeight > 18) {
+      sigHeight = 18;
+      sigWidth = sigHeight * ratio;
+    }
+
+    doc.addImage(signatureImage.data, "PNG", signatureX + 12, signatureLineY - sigHeight - 2, sigWidth, sigHeight, undefined, "FAST");
+  }
+
+  /* Signature line */
   doc.setDrawColor(75, 85, 99);
-  doc.line(pageWidth - 70, signatureLineY, pageWidth - margin, signatureLineY);
+
+  doc.line(signatureX, signatureLineY, pageWidth - margin, signatureLineY);
+
+  /* Label */
   doc.setTextColor(17, 24, 39);
   doc.setFont("helvetica", "bold");
   doc.setFontSize(8);
-  doc.text("Authorized Signature", pageWidth - 42.5, signatureLineY + 6, { align: "center" });
+
+  doc.text("Authorized Signature", signatureX + signatureWidth / 2, signatureLineY + 6, {
+    align: "center",
+  });
+
+  /* Signatory name */
+  if (model.signatory) {
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(107, 114, 128);
+
+    doc.text(model.signatory, signatureX + signatureWidth / 2, signatureLineY + 11, {
+      align: "center",
+    });
+  }
   if (model.signatory) {
     doc.setFont("helvetica", "normal");
     doc.setTextColor(107, 114, 128);

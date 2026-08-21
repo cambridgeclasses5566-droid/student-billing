@@ -273,4 +273,202 @@ router.delete("/logo", async (req, res, next) => {
   }
 });
 
+/* =========================
+   Upload Authorized Signature
+========================= */
+
+router.post(
+  "/signature",
+
+  (req, res, next) =>
+    upload.single("signature")(req, res, async (error) => {
+      if (error) {
+        if (error.code === "LIMIT_FILE_SIZE") {
+          return fail(res, "Signature image must be 2 MB or smaller.", [], 413);
+        }
+
+        return next(error);
+      }
+
+      try {
+        if (!req.file) {
+          return fail(res, "Choose a PNG, JPG, JPEG, or WebP signature image.", [], 422);
+        }
+
+        const current = await Settings.findOne({
+          ownerId: req.user.id,
+        });
+
+        const oldUrl = current?.signatureUrl;
+
+        const signatureUrl = await uploadLogoToBlob(req.file, `${req.user.id}/signature`);
+
+        const settings = await Settings.findOneAndUpdate(
+          {
+            ownerId: req.user.id,
+          },
+
+          {
+            $set: {
+              signatureUrl,
+            },
+
+            $setOnInsert: {
+              ownerId: req.user.id,
+              instituteName: req.user.instituteName,
+            },
+          },
+
+          {
+            new: true,
+            upsert: true,
+            setDefaultsOnInsert: true,
+          },
+        );
+
+        if (oldUrl) {
+          await removeStoredLogo(oldUrl);
+        }
+
+        ok(res, "Signature uploaded", {
+          settings,
+          signatureUrl,
+        });
+      } catch (error) {
+        next(error);
+      }
+    }),
+);
+
+/* =========================
+   Remove Authorized Signature
+========================= */
+
+router.delete("/signature", async (req, res, next) => {
+  try {
+    const settings = await Settings.findOne({
+      ownerId: req.user.id,
+    });
+
+    if (!settings) {
+      return fail(res, "Settings not found", [], 404);
+    }
+
+    const oldUrl = settings.signatureUrl;
+
+    settings.signatureUrl = "";
+
+    await settings.save();
+
+    if (oldUrl) {
+      await removeStoredLogo(oldUrl);
+    }
+
+    ok(res, "Signature removed", {
+      settings,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+/* =========================
+   Upload Institute Stamp
+========================= */
+
+router.post(
+  "/stamp",
+
+  (req, res, next) =>
+    upload.single("stamp")(req, res, async (error) => {
+      if (error) {
+        if (error.code === "LIMIT_FILE_SIZE") {
+          return fail(res, "Stamp image must be 2 MB or smaller.", [], 413);
+        }
+
+        return next(error);
+      }
+
+      try {
+        if (!req.file) {
+          return fail(res, "Choose a PNG, JPG, JPEG, or WebP stamp image.", [], 422);
+        }
+
+        const current = await Settings.findOne({
+          ownerId: req.user.id,
+        });
+
+        const oldUrl = current?.stampUrl;
+
+        const stampUrl = await uploadLogoToBlob(req.file, `${req.user.id}/stamp`);
+
+        const settings = await Settings.findOneAndUpdate(
+          {
+            ownerId: req.user.id,
+          },
+
+          {
+            $set: {
+              stampUrl,
+            },
+
+            $setOnInsert: {
+              ownerId: req.user.id,
+              instituteName: req.user.instituteName,
+            },
+          },
+
+          {
+            new: true,
+            upsert: true,
+            setDefaultsOnInsert: true,
+          },
+        );
+
+        if (oldUrl) {
+          await removeStoredLogo(oldUrl);
+        }
+
+        ok(res, "Stamp uploaded", {
+          settings,
+          stampUrl,
+        });
+      } catch (error) {
+        next(error);
+      }
+    }),
+);
+
+/* =========================
+   Remove Institute Stamp
+========================= */
+
+router.delete("/stamp", async (req, res, next) => {
+  try {
+    const settings = await Settings.findOne({
+      ownerId: req.user.id,
+    });
+
+    if (!settings) {
+      return fail(res, "Settings not found", [], 404);
+    }
+
+    const oldUrl = settings.stampUrl;
+
+    settings.stampUrl = "";
+
+    await settings.save();
+
+    if (oldUrl) {
+      await removeStoredLogo(oldUrl);
+    }
+
+    ok(res, "Stamp removed", {
+      settings,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default router;

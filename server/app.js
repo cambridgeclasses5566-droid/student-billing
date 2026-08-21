@@ -76,7 +76,9 @@ app.use("/api/subjects", subjectRoutes);
 app.use("/api/classes", classSubjectRoutes);
 app.use("/api/billing", billingRoutes);
 app.use("/api/admin", adminRoutes);
-app.get("/", (req, res) => res.redirect(302, "/login"));
+app.get("/", (req, res) => {
+  res.sendFile(path.join(root, "index.html"));
+});
 app.get(["/signup", "/signup.html", "/register", "/register.html", "/pricing", "/pricing.html", "/payment", "/payment.html", "/subscription", "/subscription.html", "/verify-otp.html"], (req, res) =>
   res.redirect(302, "/login"),
 );
