@@ -594,7 +594,7 @@ export async function renderStudentDirectory(root, mode = "all") {
    Student Action Menu
 ========================== */
 
-  root.addEventListener("click", async (event) => {
+  root.onclick = async (event) => {
     const restoreButton = event.target.closest(".student-restore-menu-item");
 
     if (restoreButton) {
@@ -733,7 +733,7 @@ export async function renderStudentDirectory(root, mode = "all") {
         button.setAttribute("aria-expanded", "false");
       });
     }
-  });
+  };
 
   /* Initial Load */
 
