@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Fee Receipt | Cambridge Classes</title>
+
+  <link rel="stylesheet" href="/assets/css/receipt.css" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px 16px;
+      background: #f5f7f9;
+      font-family: Arial, sans-serif;
+      color: #1f2937;
+    }
+
+    .receipt-share-container {
+      width: 100%;
+      max-width: 650px;
+      margin: 40px auto;
+    }
+
+    .receipt-share-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .brand {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      color: #006643;
+      font-size: 26px;
+    }
+
+    .brand p {
+      margin: 7px 0 0;
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    #loading {
+      text-align: center;
+      padding: 30px 10px;
+      color: #6b7280;
+    }
+
+    #error {
+      display: none;
+      text-align: center;
+      padding: 25px 10px;
+    }
+
+    #error h2 {
+      color: #dc2626;
+      font-size: 20px;
+    }
+
+    #receiptContent {
+      display: none;
+    }
+
+    #receiptActions button {
+  appearance: none;
+  border: 0;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    opacity 0.15s ease;
+}
+
+#downloadReceiptBtn {
+  background: #006643;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 102, 67, 0.2);
+}
+
+#printReceiptBtn {
+  background: #ffffff;
+  color: #006643;
+  border: 1px solid #006643 !important;
+}
+
+#receiptActions button:hover {
+  transform: translateY(-1px);
+}
+
+#receiptActions button:active {
+  transform: translateY(0);
+}
+
+#receiptActions button:focus-visible {
+  outline: 3px solid rgba(0, 102, 67, 0.2);
+  outline-offset: 2px;
+}
+
+    @media print {
+  body {
+    margin: 0;
+    padding: 0;
+    background: #ffffff;
+  }
+
+  body * {
+    visibility: hidden !important;
+  }
+
+  #printableReceipt,
+  #printableReceipt * {
+    visibility: visible !important;
+  }
+
+  #printableReceipt {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+
+  #receiptActions {
+    display: none !important;
+  }
+
+  .receipt-share-container,
+  .receipt-share-card {
+    margin: 0;
+    padding: 0;
+    max-width: none;
+    box-shadow: none;
+    background: #ffffff;
+  }
+}
+  </style>
+</head>
+
+<body>
+
+  <main class="receipt-share-container">
+
+    <section class="receipt-share-card">
+
+      <div class="brand">
+        <h1>Cambridge Classes</h1>
+        <p>Fee Receipt</p>
+      </div>
+
+      <div id="loading">
+        Loading your receipt...
+      </div>
+
+      <div id="error">
+        <h2>Receipt unavailable</h2>
+        <p>
+          This receipt link is invalid or has expired.
+        </p>
+      </div>
+
+      <div id="receiptContent">
+        <!-- Receipt details will come here in the next step -->
+      </div>
+
+    </section>
+
+  </main>
+
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
+  </script>
+  <script type="module" src="/assets/js/receiptShare.js"></script>
+
+</body>
+</html> 

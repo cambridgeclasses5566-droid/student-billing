@@ -1417,3 +1417,21 @@
     min-width: 0;
   }
 }
+
+/* Mobile rows-per-page select - dark mode */
+@media (max-width: 767px) {
+  [data-theme="dark"] .app-select-trigger .app-select-value {
+    color: #f1f5f9 !important;
+  }
+
+  [data-theme="dark"] .app-select-trigger {
+    color: #f1f5f9 !important;
+  }
+}
+
+/* Mobile pagination text - dark mode */
+@media (max-width: 767px) {
+  [data-theme="dark"] #directoryPage {
+    color: #f1f5f9 !important;
+  }
+}

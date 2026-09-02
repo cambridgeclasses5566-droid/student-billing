@@ -767,6 +767,16 @@ function bindOverflowMenus() {
       });
     });
   });
+
+  document.onclick = (event) => {
+    if (event.target.closest(".overflow-menu")) {
+      return;
+    }
+
+    menus.forEach((menu) => {
+      menu.open = false;
+    });
+  };
 }
 
 /* =========================

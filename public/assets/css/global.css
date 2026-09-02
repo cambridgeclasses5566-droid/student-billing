@@ -868,3 +868,57 @@ textarea {
     align-self: flex-start;
   }
 }
+
+/* Student action menu - dark mode */
+[data-theme="dark"] .student-menu {
+  background: #111c2c;
+  border-color: #2b3b50;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="dark"] .student-menu button {
+  background: transparent;
+  color: #f87171;
+}
+
+[data-theme="dark"] .student-menu button:hover {
+  background: #1c293b;
+  color: #ff6b6b;
+}
+/* Three-dot student menu button - dark mode */
+[data-theme="dark"] .student-menu-btn {
+  background: #111c2c !important;
+  color: #ffffff !important;
+  border-color: #2b3b50 !important;
+}
+
+[data-theme="dark"] .student-menu-btn:hover {
+  background: #1c293b !important;
+  border-color: #3a4d66 !important;
+}
+
+/* Toast messages - dark mode */
+[data-theme="dark"] .toast-stack .toast {
+  background: #111c2c !important;
+  color: #f1f5f9 !important;
+  border-color: #2b3b50 !important;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45) !important;
+}
+
+/* Error toast */
+[data-theme="dark"] .toast-stack .toast.error,
+[data-theme="dark"] .toast-stack .toast.toast-error,
+[data-theme="dark"] .toast-stack .toast[data-type="error"] {
+  background: #21171b !important;
+  color: #f8fafc !important;
+  border-left: 4px solid #ef4444 !important;
+}
+
+/* Success toast */
+[data-theme="dark"] .toast-stack .toast.success,
+[data-theme="dark"] .toast-stack .toast.toast-success,
+[data-theme="dark"] .toast-stack .toast[data-type="success"] {
+  background: #10231d !important;
+  color: #f8fafc !important;
+  border-left: 4px solid #22c55e !important;
+}

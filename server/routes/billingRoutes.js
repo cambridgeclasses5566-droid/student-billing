@@ -1,5 +1,6 @@
 import { Router } from "express";
 import Student from "../models/Student.js";
+import crypto from "crypto";
 import ClassModel from "../models/Class.js";
 import Payment from "../models/StudentPayment.js";
 import Settings from "../models/InstituteSettings.js";
@@ -263,6 +264,40 @@ router.get("/payments/:id", async (req, res) => {
     .populate("feeRequestId", "requestNumber");
   return payment ? ok(res, "Payment loaded", { payment }) : fail(res, "Payment not found.", [], 404);
 });
+
+router.post("/payments/:id/share", async (req, res, next) => {
+  try {
+    const payment = await Payment.findOne({
+      _id: req.params.id,
+      ownerId: req.user.id,
+      ...completedPaymentFilter,
+    });
+
+    if (!payment) {
+      return fail(res, "Receipt not found.", [], 404);
+    }
+
+    // Reuse the existing short link while it is still valid.
+    if (!payment.receiptShareId || !payment.receiptShareExpiresAt || payment.receiptShareExpiresAt <= new Date()) {
+      payment.receiptShareId = crypto.randomBytes(9).toString("base64url");
+
+      // Link valid for 7 days.
+      payment.receiptShareExpiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+
+      await payment.save();
+    }
+
+    const shareUrl = `${req.protocol}://${req.get("host")}/receipt/${payment.receiptShareId}`;
+
+    return ok(res, "Receipt share link created", {
+      shareUrl,
+      expiresAt: payment.receiptShareExpiresAt,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.post("/payments", async (req, res, next) => {
   const studentId = req.body?.studentId,
     amountPaise = toPaise(req.body?.amount),
@@ -371,7 +406,15 @@ router.get("/reports", async (req, res) => {
     if (req.query.start) match.paymentDate.$gte = new Date(req.query.start);
     if (req.query.end) match.paymentDate.$lte = new Date(`${req.query.end}T23:59:59`);
   }
-  const payments = await Payment.find(match).populate("studentId", "studentId name standard division");
+  const payments = (
+    await Payment.find(match)
+      .populate({
+        path: "studentId",
+        select: "studentId name standard division isArchived",
+        match: { isArchived: { $ne: true } },
+      })
+      .lean()
+  ).filter((payment) => payment.studentId);
   ok(res, "Report generated", { payments, total: fromPaise(sumPaise(payments)) });
 });
 router.get("/settings", async (req, res) => ok(res, "Settings loaded", { settings: await Settings.findOne(owner(req)) }));

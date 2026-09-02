@@ -228,6 +228,7 @@ td small {
 
 .kpis {
   grid-template-columns: repeat(3, 1fr) !important;
+  margin-bottom: 15px;
 }
 
 

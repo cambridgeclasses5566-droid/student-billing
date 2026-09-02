@@ -179,6 +179,7 @@ textarea:focus {
   background: var(--bg-elevated) !important;
   color: var(--text-main) !important;
   border-color: var(--border-strong) !important;
+  margin-bottom: 10px;
 }
 [data-theme="dark"] .btn-secondary:hover,
 [data-theme="dark"] .btn-back:hover,
@@ -200,7 +201,7 @@ textarea:focus {
 [data-theme="dark"] strong,
 [data-theme="dark"] label,
 [data-theme="dark"] dt,
-[data-theme="dark"] dd { color: var(--text-main); }
+[data-theme="dark"] dd { color: var(--text-main); margin-left: 10px; }
 [data-theme="dark"] p,
 [data-theme="dark"] small,
 [data-theme="dark"] .empty,
@@ -210,7 +211,7 @@ textarea:focus {
 [data-theme="dark"] .result-count,
 [data-theme="dark"] .profile-field span,
 [data-theme="dark"] .side-link,
-[data-theme="dark"] .top-right { color: var(--text-muted); }
+[data-theme="dark"] .top-right { color: var(--text-muted); margin-left: 10px;}
 
 [data-theme="dark"] .paid,
 [data-theme="dark"] .status-paid,

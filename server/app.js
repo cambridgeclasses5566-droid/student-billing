@@ -17,6 +17,7 @@ import adminRoutes from "./routes/adminRoutes.js";
 import { apiLimiter } from "./middleware/rateLimiters.js";
 import { errorHandler, notFound } from "./middleware/errorHandler.js";
 import { paymentQrRoot } from "./services/paymentQrStorageService.js";
+import receiptShareRoutes from "./routes/receiptShareRoutes.js";
 
 const app = express(),
   root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../public");
@@ -29,11 +30,11 @@ app.use(
 
         scriptSrc: ["'self'", "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com"],
 
-        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdn.jsdelivr.net"],
 
         fontSrc: ["'self'", "data:", "https://fonts.gstatic.com"],
 
-        imgSrc: ["'self'", "data:", "blob:"],
+        imgSrc: ["'self'", "data:", "blob:", "https://*.public.blob.vercel-storage.com"],
 
         connectSrc: ["'self'", "https://cdnjs.cloudflare.com"],
 
@@ -74,8 +75,14 @@ app.use("/api/enrollments", enrollmentRoutes);
 app.use("/api/onboarding", onboardingRoutes);
 app.use("/api/subjects", subjectRoutes);
 app.use("/api/classes", classSubjectRoutes);
+app.use("/api/receipt-share", receiptShareRoutes);
 app.use("/api/billing", billingRoutes);
 app.use("/api/admin", adminRoutes);
+
+app.get("/receipt/:shareId", (req, res) => {
+  res.sendFile(path.join(root, "receipt-share.html"));
+});
+
 app.get("/", (req, res) => {
   res.sendFile(path.join(root, "index.html"));
 });

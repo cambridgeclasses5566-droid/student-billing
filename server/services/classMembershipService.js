@@ -1,14 +1,25 @@
-import StudentClassEnrollment from '../models/StudentClassEnrollment.js';
+import StudentClassEnrollment from "../models/StudentClassEnrollment.js";
 
 export async function getActiveClassMembership({ ownerId, classId }) {
-  const enrollments = await StudentClassEnrollment.find({ ownerId, classId, status: 'active' })
-    .populate('studentId')
+  const enrollments = await StudentClassEnrollment.find({
+    ownerId,
+    classId,
+    status: "active",
+  })
+    .populate({
+      path: "studentId",
+      match: {
+        isArchived: { $ne: true },
+      },
+    })
     .sort({ joinedAt: 1, _id: 1 })
     .lean();
-  const current = enrollments.filter(item => item.studentId);
+
+  const current = enrollments.filter((item) => item.studentId);
+
   return {
     enrollments: current,
-    students: current.map(item => item.studentId),
-    studentIds: current.map(item => item.studentId._id)
+    students: current.map((item) => item.studentId),
+    studentIds: current.map((item) => item.studentId._id),
   };
 }

@@ -878,9 +878,10 @@ td {
   position:sticky;
   top:var(--topbar-height);
   z-index:4;
-  background:var(--color-bg);
+  background:#111827;
   padding:8px 0;
-  margin-bottom:20px
+  margin-bottom:20px;
+  border-radius: 12px;
 }
 
 .profile-tabs a {
